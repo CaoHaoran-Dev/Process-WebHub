@@ -98,9 +98,14 @@ No build tools or dependencies required.
 | **CSS3** | Translucent effects, dark mode, responsive layout |
 | **Vanilla JavaScript** | All interaction logic (no framework dependencies) |
 | **[Puppertino](https://github.com/codedgar/Puppertino)** | macOS-style CSS component library |
- (CDN)** | Apple-style icons (auto-fallback to Emoji) |
 | **localStorage** | History and language preference persistence |
 
+---
+
+## Documentation
+
+- [简体中文 README](Docs/zh-Hans/README.zh-Hans.md)
+- [License](LICENSE.md)
 ---
 
 ## License

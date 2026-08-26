@@ -102,6 +102,13 @@ code .
 
 ---
 
+## 文档
+
+- [English README](../../README.md)
+- [License](LICENSE.zh-Hans.md)
+
+---
+
 ## 许可证
 
 MIT © CaoHaoran-Dev
