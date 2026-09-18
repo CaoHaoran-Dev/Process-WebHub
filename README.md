@@ -10,10 +10,13 @@ This is the **web demo version** of [RunProcess](https://github.com/CaoHaoran-De
 
 The original RunProcess is a macOS native application — a Spotlight-style, translucent command launcher that wraps `/bin/zsh` in a beautiful interface.
 
-This Web Demo recreates the UI and interaction logic using pure frontend technologies (HTML + CSS + JavaScript), allowing you to:
+This Web Demo recreates the UI and interaction logic using pure frontend technologies (HTML + CSS + JavaScript). It goes beyond a static mockup: it simulates a small desktop environment with a menu bar, a draggable window with working traffic lights, a Dock, and a customizable wallpaper.
+
+You can:
 - **Try it online** – No download or installation required
 - **Explore the interactions** – Command input, history, Tab completion, Sudo mode, and more
-- **Customize and extend** – Fully open source code, freely modifiable and deployable
+- **Customize the desktop** – Wallpaper, Dock size, window material, language
+- **Extend it** – Fully open source, freely modifiable and deployable
 
 ---
 
@@ -23,16 +26,22 @@ This Web Demo recreates the UI and interaction logic using pure frontend technol
 - **Command Input** – Multi-line input support with Shift+Enter
 - **Simulated Execution** – 50+ preset commands with mock output
 - **Tab Completion** – Smart completion from command database and history
-- **Command History** – Browse previous commands with ↑ and ↓ arrow keys
-- **Sudo Mode** – Toggle to prepend `sudo` to commands (simulated)
-- **Drag & Drop** – Drag files from Finder to auto-fill file paths with escaping
+- **Command History** – Browse previous commands with ↑ and ↓ arrow keys, persisted in localStorage
+- **Sudo Mode** – Toggle to prepend `sudo` to commands, with a simulated password dialog
+- **Drag & Drop** – Drag files into the input to auto-fill paths with escaping
 
-### macOS-Style UI
-- **Translucent Interface** – `backdrop-filter` blur with automatic light/dark mode adaptation
-- **Menu Bar** – Complete macOS-style menu (RunProcess · File · Edit · View · Go · Window · Help)
-- **Title Bar** – Traffic light window controls + app icon
-- **Window Dragging** – Drag the window by its title bar
+### Desktop Environment
+- **Menu Bar** – macOS-style menu (RunProcess · File · Edit · View · Window · Help) with working dropdowns
+- **Working Traffic Lights** – Red closes the window, yellow minimizes to the Dock, green toggles maximize
+- **Draggable Window** – Drag by the title bar; position is reset via the View menu
+- **Dock** – Click to open/close RunProcess, or open Settings and About
+- **Wallpaper** – 8 built-in gradients, plus import your own image from disk
 - **Status Indicator** – Visual feedback for idle/running/done/error states
+
+### Appearance
+- **Two Window Materials** – Frosted Glass and Solid
+- **Automatic Dark Mode** – Follows system preference, with a manual toggle in the View menu
+- **Dock Size** – Small / Medium / Large
 
 ### Multi-Language Support
 - **Bilingual** – Toggle between Chinese and English instantly
@@ -40,20 +49,15 @@ This Web Demo recreates the UI and interaction logic using pure frontend technol
 
 ### Keyboard Shortcuts
 
+Only shortcuts that browsers allow are listed. System-level shortcuts (like ⌘Q or ⌘W) cannot be intercepted by a web page and are therefore not implemented.
+
 | Shortcut | Action |
 |----------|--------|
 | `Enter` | Execute command |
 | `Shift+Enter` | New line |
 | `Tab` | Auto-complete |
-| `↑`/`↓` | History navigation |
-| `⌘Q` | Quit (demo) |
-| `⌘,` | Preferences (demo) |
-| `⌘C`/`⌘V`/`⌘A` | Copy/Paste/Select All |
-| `⌘W` | Close (demo) |
-| `⌘N` | New Tab (demo) |
-| `⌘⇧N` | New Window (demo) |
-| `⌘M` | Minimize (demo) |
-| `⌘⇧H`/`⌘⇧D`/`⌘⇧L` | Go to Home/Desktop/Downloads (demo) |
+| `↑` / `↓` | History navigation |
+| `Esc` | Blur input |
 
 ---
 
@@ -95,10 +99,19 @@ No build tools or dependencies required.
 | Technology | Purpose |
 |------------|---------|
 | **HTML5** | Page structure |
-| **CSS3** | Translucent effects, dark mode, responsive layout |
+| **CSS3** | Frosted glass, dark mode, responsive layout |
 | **Vanilla JavaScript** | All interaction logic (no framework dependencies) |
-| **[Puppertino](https://github.com/codedgar/Puppertino)** | macOS-style CSS component library |
-| **localStorage** | History and language preference persistence |
+| **localStorage** | Settings, history, and wallpaper persistence |
+
+---
+
+## Known Limitations
+
+- **Commands are simulated.** Nothing is executed on your machine. The output is preset mock data.
+- **Sudo is simulated.** The password dialog accepts any input; no privilege escalation occurs.
+- **Traffic lights are cosmetic.** Red hides the window, but the Dock icon remains. A web page cannot truly quit or close itself.
+- **File drag-and-drop falls back to filename.** Browsers do not expose the full path of a dropped file for security reasons, so `files[0].path` is usually empty.
+- **Wallpaper size limit.** Imported images are stored as Data URLs in localStorage, which has a typical quota of about 5 MB.
 
 ---
 
@@ -106,6 +119,7 @@ No build tools or dependencies required.
 
 - [简体中文 README](Docs/zh-Hans/README.zh-Hans.md)
 - [License](LICENSE.md)
+
 ---
 
 ## License
