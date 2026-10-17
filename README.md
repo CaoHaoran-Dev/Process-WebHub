@@ -1,127 +1,117 @@
-# RunProcess · Web Demo
+# Process-WebHub
 
-> A macOS-style command launcher web demo — pure frontend, simulated interactions, open source and free.
+> Interactive web demonstrations for RunProcess (macOS) and ProcessSH (Windows) — pure frontend, no build tools required.
 
 ---
 
 ## Overview
 
-This is the **web demo version** of [RunProcess](https://github.com/CaoHaoran-Dev/RunProcess).
+**Process-WebHub** is a static, multi-page website that hosts browser-based demos for two native desktop applications:
 
-The original RunProcess is a macOS native application — a Spotlight-style, translucent command launcher that wraps `/bin/zsh` in a beautiful interface.
+- **RunProcess** – A Spotlight-style command launcher for macOS.
+- **ProcessSH** – A Windows port of RunProcess built with WinUI 3, featuring system tray integration and native Mica/Acrylic materials.
 
-This Web Demo recreates the UI and interaction logic using pure frontend technologies (HTML + CSS + JavaScript). It goes beyond a static mockup: it simulates a small desktop environment with a menu bar, a draggable window with working traffic lights, a Dock, and a customizable wallpaper.
-
-You can:
-- **Try it online** – No download or installation required
-- **Explore the interactions** – Command input, history, Tab completion, Sudo mode, and more
-- **Customize the desktop** – Wallpaper, Dock size, window material, language
-- **Extend it** – Fully open source, freely modifiable and deployable
+The goal of this project is to showcase the UI, interactions, and design language of both native apps directly in your browser. You can drag windows, execute simulated commands, change window materials, and customize the desktop wallpaper — all without installing anything.
 
 ---
 
-## Features
+## Key Features
 
-### Core Interactions
-- **Command Input** – Multi-line input support with Shift+Enter
-- **Simulated Execution** – 50+ preset commands with mock output
-- **Tab Completion** – Smart completion from command database and history
-- **Command History** – Browse previous commands with ↑ and ↓ arrow keys, persisted in localStorage
-- **Sudo Mode** – Toggle to prepend `sudo` to commands, with a simulated password dialog
-- **Drag & Drop** – Drag files into the input to auto-fill paths with escaping
-
-### Desktop Environment
-- **Menu Bar** – macOS-style menu (RunProcess · File · Edit · View · Window · Help) with working dropdowns
-- **Working Traffic Lights** – Red closes the window, yellow minimizes to the Dock, green toggles maximize
-- **Draggable Window** – Drag by the title bar; position is reset via the View menu
-- **Dock** – Click to open/close RunProcess, or open Settings and About
-- **Wallpaper** – 8 built-in gradients, plus import your own image from disk
-- **Status Indicator** – Visual feedback for idle/running/done/error states
-
-### Appearance
-- **Two Window Materials** – Frosted Glass and Solid
-- **Automatic Dark Mode** – Follows system preference, with a manual toggle in the View menu
-- **Dock Size** – Small / Medium / Large
-
-### Multi-Language Support
-- **Bilingual** – Toggle between Chinese and English instantly
-- **Persistent** – Language preference saved in localStorage
-
-### Keyboard Shortcuts
-
-Only shortcuts that browsers allow are listed. System-level shortcuts (like ⌘Q or ⌘W) cannot be intercepted by a web page and are therefore not implemented.
-
-| Shortcut | Action |
-|----------|--------|
-| `Enter` | Execute command |
-| `Shift+Enter` | New line |
-| `Tab` | Auto-complete |
-| `↑` / `↓` | History navigation |
-| `Esc` | Blur input |
+- **Platform Selection** – A clean, Apple-style landing page to choose between RunProcess and ProcessSH.
+- **Native UI Recreation** – Pixel-perfect replications of macOS traffic lights, menu bars, Windows taskbar, system tray, and acrylic flyouts using pure CSS and web fonts (Segoe Fluent Icons).
+- **Window Dragging** – Fully draggable windows using native Pointer Events (supports mouse, trackpad, and touch).
+- **Dynamic Window Expansion** – Windows smoothly expand in height to accommodate command output, just like the native apps.
+- **Customizable Wallpapers** – Choose from 8 built-in gradients, or import your own image (saved locally in `localStorage`).
+- **Window Materials** – Simulate Frosted Glass, Liquid Glass (RunProcess) and Mica, Acrylic, Solid (ProcessSH).
+- **Full Localization** – Complete support for English, Simplified Chinese (zh-Hans), and Traditional Chinese (zh-Hant) via runtime JSON loading.
+- **Simulated Execution** – A set of preset commands returns mock output with ANSI-like formatting. Nothing is executed on your machine.
 
 ---
 
-## Quick Start
+## Project Structure
 
-### Try It Online
+```text
+Process-WebHub/
+├── index.html                 # Homepage (Platform selection)
+├── runprocess/
+│   └── index.html             # RunProcess (macOS) demo & documentation
+├── processsh/
+│   └── index.html             # ProcessSH (Windows) demo & documentation
+└── assets/
+    ├── css/
+    │   ├── main.css           # Global site styles, tokens, typography
+    │   ├── demo.css           # Native UI components, window dragging, layout
+    │   └── liquid-glass.css   # Liquid Glass specific effects for RunProcess
+    ├── js/
+    │   ├── i18n.js            # Localization engine (JSON loader)
+    │   ├── demo-common.js     # Shared logic (wallpaper, dragging, menus)
+    │   ├── demo-runprocess.js # RunProcess interaction logic
+    │   └── demo-processsh.js  # ProcessSH interaction logic
+    └── lang/
+        ├── en.json            # English strings
+        ├── zh-Hans.json       # Simplified Chinese strings
+        └── zh-Hant.json       # Traditional Chinese strings
+```
 
-Visit the GitHub Pages demo:
-[https://CaoHaoran-Dev.github.io/RunProcess-WebDemo/](https://CaoHaoran-Dev.github.io/RunProcess-WebDemo/index.html)
+---
 
-### Run Locally
+## How to Run Locally
+
+Because the site loads localization strings via `fetch` (JSON files), you cannot simply open `index.html` directly from your file system due to CORS restrictions.
 
 1. **Clone the repository**
-```bash
-git clone https://github.com/CaoHaoran-Dev/RunProcess-WebDemo.git
-cd RunProcess-WebDemo
-```
+   ```bash
+   git clone https://github.com/CaoHaoran-Dev/Process-WebHub.git
+   cd Process-WebHub
+   ```
 
-2. **Open in browser**
-```bash
-# Option 1: Double-click index.html
-# Option 2: Use VS Code Live Server
-code .
-# Right-click index.html → Open with Live Server
-```
+2. **Start a local web server**
+   - Using Python (recommended):
+     ```bash
+     python3 -m http.server 8000
+     ```
+   - Or using Node.js (if you have `npx` installed):
+     ```bash
+     npx serve .
+     ```
 
-No build tools or dependencies required.
-
-### Deploy to GitHub Pages
-
-1. Fork this repository
-2. Go to Settings → Pages → Branch select `main`
-3. Visit `https://your-username.github.io/RunProcess-WebDemo/`
+3. **Open in browser**
+   Navigate to `http://localhost:8000`.
 
 ---
 
-## Tech Stack
+## Deployment
 
-| Technology | Purpose |
-|------------|---------|
-| **HTML5** | Page structure |
-| **CSS3** | Frosted glass, dark mode, responsive layout |
-| **Vanilla JavaScript** | All interaction logic (no framework dependencies) |
-| **localStorage** | Settings, history, and wallpaper persistence |
+This site is designed to be hosted on **GitHub Pages** or any static hosting service.
+
+1. Push the repository to GitHub.
+2. Go to **Settings → Pages**.
+3. Under **Build and deployment**, set the source to **Deploy from a branch**.
+4. Select the `main` branch and the `/ (root)` folder.
+5. Save. Your site will be live at `https://<your-username>.github.io/Process-WebHub/`.
+
+> **Note:** Ensure the `.nojekyll` file is present in the root directory to prevent GitHub Pages from processing the site with Jekyll, which might interfere with `assets/` folders.
 
 ---
 
 ## Known Limitations
 
-- **Commands are simulated.** Nothing is executed on your machine. The output is preset mock data.
-- **Sudo is simulated.** The password dialog accepts any input; no privilege escalation occurs.
-- **Traffic lights are cosmetic.** Red hides the window, but the Dock icon remains. A web page cannot truly quit or close itself.
-- **File drag-and-drop falls back to filename.** Browsers do not expose the full path of a dropped file for security reasons, so `files[0].path` is usually empty.
-- **Wallpaper size limit.** Imported images are stored as Data URLs in localStorage, which has a typical quota of about 5 MB.
+- **Simulated Commands Only:** No actual shell commands are executed. All output is hardcoded mock data.
+- **Sudo / Admin Mode is Simulated:** The password dialog and UAC prompts are visual only.
+- **Wallpaper Size Limit:** Imported images are stored as Data URLs in `localStorage`. Browsers typically limit `localStorage` to around 5 MB.
+- **Liquid Glass Refraction:** The true refraction effect in RunProcess requires SVG displacement maps, which are fully supported only in Chromium-based browsers. Safari and Firefox gracefully degrade to a frosted glass effect.
 
 ---
 
-## Documentation
+## Tech Stack
 
-- [简体中文 README](Docs/zh-Hans/README.zh-Hans.md)
-- [License](LICENSE.md)
+- **HTML5 & CSS3** (Flexbox, Grid, CSS Variables, `backdrop-filter`)
+- **Vanilla JavaScript** (No frameworks, no bundlers)
+- **Pointer Events** for unified mouse/touch dragging
+- **Web Fonts** (`Segoe Fluent Icons`, `SF Pro`, `Cascadia Mono`)
 
 ---
 
 ## License
 
-MIT © CaoHaoran-Dev
+MIT © 2026 CaoHaoran-Dev

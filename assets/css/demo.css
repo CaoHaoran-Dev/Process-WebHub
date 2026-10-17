@@ -1,0 +1,241 @@
+/* ============================================
+   全局字体与基础排版
+   ============================================ */
+@font-face {
+  font-family: 'Segoe Fluent Icons';
+  src: local('Segoe Fluent Icons'), local('Segoe MDL2 Assets');
+}
+
+* { box-sizing: border-box; }
+
+.desktop {
+  position: relative;
+  width: 100%;
+  height: 540px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 24px 0 40px;
+  background-color: #a8b8d0;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, sans-serif;
+}
+
+.desktop-win {
+  background-color: #e5f0f9;
+  border-radius: 0;
+  height: 600px;
+}
+
+.menu-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: none;
+}
+.menu-backdrop.is-open {
+  display: block;
+}
+
+/* ============================================
+   macOS Menu Bar & Dropdowns
+   ============================================ */
+.menubar {
+  display: flex; align-items: center; gap: 0; height: 28px; padding: 0 16px;
+  background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08); font-size: 12px; color: #1d1d1f;
+  position: relative; z-index: 50;
+}
+@media (prefers-color-scheme: dark) {
+  .menubar { background: rgba(0, 0, 0, 0.35); color: #f5f5f7; border-bottom-color: rgba(255, 255, 255, 0.08); }
+}
+.menubar-item {
+  padding: 0 10px; height: 24px; display: flex; align-items: center; cursor: default; border-radius: 4px; margin: 0 2px;
+}
+.menubar-item:hover, .menubar-item.active { background: rgba(0, 0, 0, 0.1); }
+@media (prefers-color-scheme: dark) { .menubar-item:hover, .menubar-item.active { background: rgba(255, 255, 255, 0.15); } }
+.menubar-brand { font-weight: 600; }
+.menubar-spacer { flex: 1; }
+.menubar-status { font-size: 13px; padding-right: 10px; }
+
+.mac-dropdown {
+  position: absolute; top: 30px; left: 10px; min-width: 200px;
+  background: rgba(255, 255, 255, 0.72); backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  border-radius: 6px; padding: 4px; z-index: 100; display: none; font-size: 13px; color: #1d1d1f;
+}
+@media (prefers-color-scheme: dark) {
+  .mac-dropdown { background: rgba(40, 40, 40, 0.72); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05); color: #f5f5f7; }
+}
+.mac-dropdown.is-open { display: block; }
+.mac-menu-item { padding: 4px 12px; border-radius: 4px; cursor: default; }
+.mac-menu-item:hover { background: var(--accent); color: #fff; }
+.mac-menu-sep { height: 1px; background: rgba(0, 0, 0, 0.1); margin: 4px 8px; }
+@media (prefers-color-scheme: dark) { .mac-menu-sep { background: rgba(255, 255, 255, 0.1); } }
+
+/* ============================================
+   Fluent Icons
+   ============================================ */
+.fluent-icon { font-family: 'Segoe Fluent Icons', 'Segoe MDL2 Assets' !important; font-size: 16px; display: inline-flex; align-items: center; justify-content: center; }
+
+/* ============================================
+   Windows Taskbar
+   ============================================ */
+.win-taskbar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+  background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 14px; color: #1d1d1f; z-index: 30;
+}
+@media (prefers-color-scheme: dark) { .win-taskbar { background: rgba(32, 32, 32, 0.85); color: #f5f5f7; border-top-color: rgba(255, 255, 255, 0.08); } }
+.taskbar-left, .taskbar-right { display: flex; align-items: center; gap: 16px; }
+.taskbar-icon { font-size: 18px; color: #1d1d1f; }
+@media (prefers-color-scheme: dark) { .taskbar-icon { color: #f5f5f7; } }
+.taskbar-clock { font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* ============================================
+   Tray & Flyout
+   ============================================ */
+.tray-icon {
+  position: absolute; bottom: 56px; right: 16px; width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0, 0, 0, 0.1); cursor: pointer; z-index: 50; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+@media (prefers-color-scheme: dark) { .tray-icon { background: rgba(0, 0, 0, 0.5); border-color: rgba(255, 255, 255, 0.15); } }
+
+.win11-tray-flyout {
+  position: absolute; bottom: 110px; right: 16px; width: 76px;
+  background: rgba(249, 249, 249, 0.85); backdrop-filter: blur(40px) saturate(150%); -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  padding: 8px; z-index: 100; display: none;
+}
+@media (prefers-color-scheme: dark) {
+  .win11-tray-flyout { background: rgba(44, 44, 44, 0.85); border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05); }
+}
+.win11-tray-flyout.is-open { display: block; animation: flyoutIn 0.15s cubic-bezier(0.1, 0.9, 0.2, 1); }
+@keyframes flyoutIn { from { opacity: 0; transform: translateY(8px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.tray-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.tray-app { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 8px; cursor: pointer; transition: background 0.1s; }
+.tray-app:hover { background: rgba(0, 0, 0, 0.06); }
+@media (prefers-color-scheme: dark) { .tray-app:hover { background: rgba(255, 255, 255, 0.1); } }
+.tray-app-active { background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04); }
+.tray-app-active:hover { background: #f5f5f5; }
+@media (prefers-color-scheme: dark) { .tray-app-active { background: rgba(255, 255, 255, 0.15); box-shadow: none; border: 1px solid rgba(255, 255, 255, 0.05); } .tray-app-active:hover { background: rgba(255, 255, 255, 0.2); } }
+
+/* ============================================
+   ProcessSH Window (Dynamic Expansion & Materials)
+   ============================================ */
+.demo-window-win {
+  border-radius: 8px; width: 520px;
+  /* 默认 Mica 材质 */
+  background: rgba(243, 248, 252, 0.95);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); z-index: 20;
+  
+  height: 200px; overflow: hidden;
+  transition: height 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s, border-color 0.3s, background 0.3s;
+}
+.demo-window-win.has-output { height: 420px; }
+.demo-window-win.dragging { transition: none; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28); z-index: 500; cursor: grabbing; }
+
+/* 材质类覆盖 */
+.demo-window-win.style-mica {
+  background: rgba(243, 248, 252, 0.95);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+}
+.demo-window-win.style-acrylic {
+  background: rgba(243, 243, 243, 0.75);
+  backdrop-filter: blur(40px) saturate(150%); -webkit-backdrop-filter: blur(40px) saturate(150%);
+}
+.demo-window-win.style-none {
+  background: var(--bg);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-color: var(--divider);
+}
+
+/* 触控拖拽修复 */
+.demo-titlebar-win { 
+  display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; 
+  background: transparent; border-bottom: none; cursor: grab; 
+  user-select: none; -webkit-user-select: none; touch-action: none; /* 关键 */
+}
+.demo-titlebar-win .demo-title { font-size: 13px; color: var(--secondary); margin-left: 0; }
+.win-controls { display: flex; align-items: center; gap: 4px; }
+.win-btn { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; border: none; background: transparent; color: inherit; font-family: 'Segoe Fluent Icons'; }
+.win-btn:hover { background: rgba(0, 0, 0, 0.05); }
+@media (prefers-color-scheme: dark) { .win-btn:hover { background: rgba(255, 255, 255, 0.1); } }
+.win-close:hover { background: #e81123; color: #fff; }
+
+.demo-body { padding: 0 20px 20px 20px; }
+.native-input-card { display: flex; align-items: center; gap: 12px; background: #ffffff; border-radius: 10px; padding: 8px 16px; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02); margin-bottom: 12px; }
+@media (prefers-color-scheme: dark) { .native-input-card { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1); } }
+.native-icon-terminal { font-family: 'Segoe Fluent Icons', 'Segoe MDL2 Assets'; font-size: 18px; color: #666; }
+.demo-input { flex: 1; border: none; background: transparent; font-family: "Cascadia Mono", Consolas, monospace; font-size: 16px; color: var(--text); outline: none; min-width: 0; }
+
+.demo-options-row { display: flex; align-items: center; margin-bottom: 20px; }
+.native-checkbox { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); cursor: pointer; user-select: none; }
+.native-checkbox input { display: none; }
+.checkbox-box { width: 18px; height: 18px; border-radius: 4px; border: 1px solid #8a8a8a; background: transparent; display: inline-flex; align-items: center; justify-content: center; transition: all 0.1s; }
+.native-checkbox input:checked + .checkbox-box { background: #0078D7; border-color: #0078D7; }
+.native-checkbox input:checked + .checkbox-box::after { content: '\E73E'; font-family: 'Segoe Fluent Icons'; font-size: 12px; color: #fff; }
+
+.native-hints { font-size: 12px; color: #777; line-height: 1.5; }
+@media (prefers-color-scheme: dark) { .native-hints { color: #999; } }
+
+.native-output-container { display: none; margin-top: 14px; opacity: 0; transition: opacity 0.2s; }
+.native-output-container.is-visible { display: block; opacity: 1; }
+.native-output { margin: 0; padding: 12px; background: rgba(0, 0, 0, 0.03); border-radius: 6px; font-family: "Cascadia Mono", Consolas, monospace; font-size: 13px; line-height: 1.5; color: var(--text); white-space: pre-wrap; word-break: break-word; max-height: 240px; overflow-y: auto; border: 1px solid rgba(0, 0, 0, 0.04); }
+@media (prefers-color-scheme: dark) { .native-output { background: rgba(0, 0, 0, 0.2); border-color: rgba(255,255,255,0.05); } }
+
+/* ============================================
+   RunProcess Window (Dynamic Expansion)
+   ============================================ */
+.demo-window {
+  border-radius: var(--radius-md); border: 1px solid var(--glass-border); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18); background: var(--bg);
+  position: absolute; width: 520px; z-index: 20;
+  height: 170px; overflow: hidden;
+  transition: height 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background 0.3s, border-color 0.3s;
+}
+.demo-window.has-output { height: 450px; }
+.demo-window.dragging { transition: none; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28); z-index: 500; cursor: grabbing; }
+
+#rp-window { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.demo-titlebar { display: flex; align-items: center; gap: 8px; padding: 11px 15px; background: rgba(0, 0, 0, 0.03); border-bottom: 1px solid var(--divider); cursor: grab; user-select: none; touch-action: none; }
+@media (prefers-color-scheme: dark) { .demo-titlebar { background: rgba(255, 255, 255, 0.04); } }
+.traffic-light { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; cursor: pointer; }
+.traffic-light.red { background: #FF5F56; }
+.traffic-light.yellow { background: #FFBD2E; }
+.traffic-light.green { background: #27C93F; }
+.demo-title { margin-left: 6px; font-size: 12px; font-weight: 500; color: var(--secondary); }
+.demo-input-box { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.6); border-radius: 12px; padding: 12px 16px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); margin-bottom: 16px; }
+@media (prefers-color-scheme: dark) { .demo-input-box { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); } }
+.demo-prompt, .demo-prompt-icon { font-size: 18px; color: var(--secondary); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.demo-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); cursor: pointer; }
+.demo-hints { font-size: 12px; color: var(--secondary); opacity: 0.7; margin-top: 20px; user-select: none; }
+.demo-output { display: none; margin-top: 14px; padding: 12px; background: var(--bg-alt); border-radius: 8px; font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: 13px; line-height: 1.5; color: var(--text); white-space: pre-wrap; word-break: break-word; min-height: 48px; max-height: 240px; overflow-y: auto; border: 1px solid var(--divider); text-align: left; }
+.demo-output.is-visible { display: block; }
+
+/* Appearance & Wallpaper Picker */
+.wallpaper-picker { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 32px; }
+.wp-swatch { width: 60px; height: 60px; border-radius: 12px; border: 2px solid transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 500; color: var(--secondary); background-color: var(--bg-alt); transition: transform 0.15s, border-color 0.15s; position: relative; padding: 0; }
+.wp-swatch:hover { transform: scale(1.06); }
+.wp-swatch.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.25); }
+.wp-import { border: 2px dashed var(--divider); background: transparent; font-size: 22px; color: var(--secondary); }
+.wp-import:hover { border-color: var(--accent); color: var(--accent); }
+.wp-none { width: auto; padding: 0 18px; font-size: 13px; border: 1px solid var(--divider); background: var(--bg); color: var(--text); }
+.wp-none.active { border-color: var(--accent); }
+
+.appearance-picker { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 32px; }
+.appearance-option { padding: 8px 18px; border-radius: 980px; border: 1px solid var(--divider); background: var(--bg); color: var(--text); font-size: 14px; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+.appearance-option:hover { border-color: var(--accent); }
+.appearance-option.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+@media (max-width: 1100px) { .demo-window, .demo-window-win { width: 460px; } }
+@media (max-width: 734px) {
+  .desktop { height: 420px; } .desktop-win { height: 460px; }
+  .demo-window, .demo-window-win { width: calc(100% - 32px); }
+  .shortcut-table td:first-child { width: 120px; } .menubar { gap: 2px; font-size: 11px; }
+  .wallpaper-picker { gap: 8px; } .wp-swatch { width: 50px; height: 50px; }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProcessSH · Web Demo</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/demo.css">
+</head>
+<body>
+
+<nav class="nav-shell">
+  <div class="global-nav-inner">
+    <a class="brand" href="../index.html">Process-WebHub</a>
+    <div class="desktop-nav">
+      <a href="../runprocess/index.html">RunProcess</a>
+      <a href="index.html" class="active">ProcessSH</a>
+    </div>
+  </div>
+</nav>
+
+<section class="detail-hero">
+  <p class="eyebrow">Windows</p>
+  <h1>ProcessSH</h1>
+  <p class="tagline" data-i18n="ps.tagline">A Windows port of RunProcess — PowerShell 7, system tray, and Mica materials.</p>
+</section>
+
+<div class="detail-body detail-body-wide">
+
+  <h2 data-i18n="ps.desktop.title">Desktop Preview</h2>
+  <p data-i18n="ps.desktop.desc">Drag the window by its title bar. Pick a wallpaper below.</p>
+
+  <div class="desktop desktop-win" id="ps-desktop">
+    <!-- 全局点击遮罩 -->
+    <div class="menu-backdrop" id="ps-menu-backdrop"></div>
+
+    <!-- 演示窗口 -->
+    <div class="demo-window demo-window-win" id="ps-window">
+      <div class="demo-titlebar-win" data-drag-handle>
+        <span class="demo-title">ProcessSH</span>
+        <div class="win-controls">
+          <button class="win-btn win-close" title="Close">&#xE8BB;</button>
+        </div>
+      </div>
+      
+      <div class="demo-body">
+        <div class="native-input-card">
+          <span class="native-icon-terminal">&#xE756;</span>
+          <input type="text" class="demo-input" id="ps-input"
+                 data-i18n-placeholder="ps.placeholder"
+                 placeholder="Type a command, press Enter" autocomplete="off">
+        </div>
+        
+        <div class="demo-options-row">
+          <label class="native-checkbox">
+            <input type="checkbox" id="ps-admin">
+            <span class="checkbox-box"></span>
+            <span data-i18n="ps.admin">Run as administrator</span>
+          </label>
+        </div>
+        
+        <div class="native-hints" data-i18n="ps.hint">
+          Drag file · Tab complete · ↑↓ history · Ctrl+R search · Esc hide
+        </div>
+        
+        <div class="native-output-container" id="ps-output-container">
+          <pre class="native-output" id="ps-output"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Windows 11 溢出托盘面板 -->
+    <div class="win11-tray-flyout" id="ps-tray-flyout">
+      <div class="tray-grid">
+        <div class="tray-app tray-app-active" title="ProcessSH">
+          <span class="fluent-icon" style="color: #0078D7;">&#xE756;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部任务栏 -->
+    <div class="win-taskbar">
+      <div class="taskbar-left">
+        <span class="fluent-icon taskbar-icon">&#xE782;</span>
+        <span class="fluent-icon taskbar-icon">&#xE721;</span>
+      </div>
+      <div class="taskbar-right">
+        <span class="fluent-icon taskbar-icon">&#xE767;</span>
+        <span class="fluent-icon taskbar-icon">&#xE774;</span>
+        <span class="taskbar-clock" id="ps-clock">10:00</span>
+      </div>
+    </div>
+
+    <div class="tray-icon" id="ps-tray-icon" title="ProcessSH">
+      <span class="fluent-icon" style="color: #0078D7;">&#xE756;</span>
+    </div>
+  </div>
+
+  <h2 data-i18n="wallpaper.title">Wallpaper</h2>
+  <p data-i18n="wallpaper.desc">Built-in gradients or import your own image.</p>
+  <div class="wallpaper-picker" id="wp-picker">
+    <button class="wp-swatch" data-bg="wp-1" style="background:linear-gradient(135deg,#667eea,#764ba2)"></button>
+    <button class="wp-swatch" data-bg="wp-2" style="background:linear-gradient(135deg,#f093fb,#f5576c)"></button>
+    <button class="wp-swatch" data-bg="wp-3" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"></button>
+    <button class="wp-swatch" data-bg="wp-4" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"></button>
+    <button class="wp-swatch" data-bg="wp-5" style="background:linear-gradient(135deg,#fa709a,#fee140)"></button>
+    <button class="wp-swatch" data-bg="wp-6" style="background:linear-gradient(135deg,#30cfd0,#330867)"></button>
+    <button class="wp-swatch" data-bg="wp-7" style="background:linear-gradient(135deg,#a8edea,#fed6e3)"></button>
+    <button class="wp-swatch" data-bg="wp-8" style="background:linear-gradient(135deg,#ff9a9e,#fecfef)"></button>
+    <label class="wp-swatch wp-import" title="Import image">
+      <input type="file" id="wp-file" accept="image/*" hidden>
+      <span data-i18n="wallpaper.import">+</span>
+    </label>
+    <button class="wp-swatch wp-none" data-bg="none" data-i18n="wallpaper.none">None</button>
+  </div>
+
+  <h2 data-i18n="ps.appearance.title">Window Material</h2>
+  <p data-i18n="ps.appearance.desc">Mica and Acrylic require Windows 11. The demo uses frosted glass as a web approximation.</p>
+  <div class="appearance-picker" id="ps-appearance">
+    <button class="appearance-option active" data-style="mica" data-i18n="ps.appearance.mica">Mica</button>
+    <button class="appearance-option" data-style="acrylic" data-i18n="ps.appearance.acrylic">Acrylic</button>
+    <button class="appearance-option" data-style="none" data-i18n="ps.appearance.none">None</button>
+  </div>
+
+  <h2 data-i18n="ps.features.title">Features</h2>
+  <ul class="feature-list">
+    <li data-i18n="ps.f1">PowerShell 7 command execution</li>
+    <li data-i18n="ps.f2">Tab completion and fuzzy history search (Ctrl+R)</li>
+    <li data-i18n="ps.f3">Administrator mode via UAC prompt</li>
+    <li data-i18n="ps.f4">Custom paths appended to PATH with PATHEXT resolution</li>
+    <li data-i18n="ps.f5">System tray integration, no taskbar icon</li>
+  </ul>
+
+  <h2 data-i18n="ps.shortcuts.title">Keyboard Shortcuts</h2>
+  <table class="shortcut-table">
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd></td><td data-i18n="ps.sc.toggle">Show / hide window</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>R</kbd></td><td data-i18n="ps.sc.search">Search history</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td data-i18n="ps.sc.enter">Execute</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td data-i18n="ps.sc.tab">Completion</td></tr>
+    <tr><td><kbd>Esc</kbd></td><td data-i18n="ps.sc.hide">Hide window</td></tr>
+  </table>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <div class="lang-switch-footer">
+      <span class="lang-label" data-i18n="footer.lang">Language:</span>
+      <a href="#" data-lang="en">English</a>
+      <span class="lang-sep">|</span>
+      <a href="#" data-lang="zh-Hans">简体中文</a>
+      <span class="lang-sep">|</span>
+      <a href="#" data-lang="zh-Hant">繁體中文</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/i18n.js"></script>
+<script src="../assets/js/demo-common.js"></script>
+<script src="../assets/js/demo-processsh.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.DemoCommon.initWallpaper('wp-picker', 'ps-desktop', 'wallpaper.ps');
+    window.DemoCommon.initDraggable('ps-window', '[data-drag-handle]', null, 'ps-desktop');
+    window.DemoCommon.initTrayFlyout('ps-tray-icon', 'ps-tray-flyout', 'ps-menu-backdrop');
+  });
+</script>
+</body>
+</html>

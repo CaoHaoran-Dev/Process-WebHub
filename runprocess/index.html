@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RunProcess · Web Demo</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/demo.css">
+<link rel="stylesheet" href="../assets/css/liquid-glass.css">
+</head>
+<body>
+
+<nav class="nav-shell">
+  <div class="global-nav-inner">
+    <a class="brand" href="../index.html">Process-WebHub</a>
+    <div class="desktop-nav">
+      <a href="index.html" class="active">RunProcess</a>
+      <a href="../processsh/index.html">ProcessSH</a>
+    </div>
+  </div>
+</nav>
+
+<section class="detail-hero">
+  <p class="eyebrow">macOS</p>
+  <h1>RunProcess</h1>
+  <p class="tagline" data-i18n="rp.tagline">A Spotlight-style command launcher with real shell execution and a translucent interface.</p>
+</section>
+
+<div class="detail-body detail-body-wide">
+
+  <h2 data-i18n="rp.desktop.title">Desktop Preview</h2>
+  <p data-i18n="rp.desktop.desc">Drag the window by its title bar. Pick a wallpaper below.</p>
+
+  <div class="desktop" id="rp-desktop">
+    <!-- macOS 菜单栏 -->
+    <div class="menubar" id="rp-menubar">
+      <div class="menubar-item menubar-brand" data-menu="rp-menu-app">RunProcess</div>
+      <div class="menubar-item" data-menu="rp-menu-file" data-i18n="rp.menu.file">File</div>
+      <div class="menubar-item" data-menu="rp-menu-edit" data-i18n="rp.menu.edit">Edit</div>
+      <div class="menubar-item" data-menu="rp-menu-view" data-i18n="rp.menu.view">View</div>
+      <div class="menubar-item" data-menu="rp-menu-window" data-i18n="rp.menu.window">Window</div>
+      <div class="menubar-item" data-menu="rp-menu-help" data-i18n="rp.menu.help">Help</div>
+      <span class="menubar-spacer"></span>
+      <span class="menubar-status" id="rp-menubar-status">⚡</span>
+    </div>
+
+    <!-- 下拉菜单区域 -->
+    <div class="mac-dropdown" id="rp-menu-app">
+      <div class="mac-menu-item" data-i18n="menu.about">About RunProcess</div>
+      <div class="mac-menu-sep"></div>
+      <div class="mac-menu-item" data-i18n="menu.settings">Settings...</div>
+      <div class="mac-menu-item" data-i18n="menu.check.updates">Check for Updates...</div>
+      <div class="mac-menu-sep"></div>
+      <div class="mac-menu-item" data-i18n="menu.quit">Quit RunProcess</div>
+    </div>
+    <div class="mac-dropdown" id="rp-menu-file">
+      <div class="mac-menu-item" data-i18n="menu.new.window">New Window</div>
+      <div class="mac-menu-item" data-i18n="menu.clear.history">Clear Command History</div>
+    </div>
+    <div class="mac-dropdown" id="rp-menu-edit">
+      <div class="mac-menu-item" data-i18n="menu.copy">Copy</div>
+      <div class="mac-menu-item" data-i18n="menu.paste">Paste</div>
+    </div>
+    <div class="mac-dropdown" id="rp-menu-view">
+      <div class="mac-menu-item" data-i18n="menu.appearance">Appearance</div>
+      <div class="mac-menu-item" data-i18n="menu.hide.on.deactivate">Hide on Deactivate</div>
+    </div>
+    <div class="mac-dropdown" id="rp-menu-window">
+      <div class="mac-menu-item" data-i18n="menu.minimize">Minimize</div>
+      <div class="mac-menu-item" data-i18n="menu.center">Center Window</div>
+    </div>
+    <div class="mac-dropdown" id="rp-menu-help">
+      <div class="mac-menu-item" data-i18n="menu.help.doc">RunProcess Help</div>
+    </div>
+
+    <!-- 全局点击遮罩，仅用于关闭菜单，透明 -->
+    <div class="menu-backdrop" id="rp-menu-backdrop"></div>
+
+    <!-- 演示窗口 -->
+    <div class="demo-window liquid-glass-demo" id="rp-window">
+      <div class="demo-titlebar" data-drag-handle>
+        <span class="traffic-light red" title="Close"></span>
+        <span class="traffic-light yellow" title="Minimize"></span>
+        <span class="traffic-light green" title="Maximize"></span>
+        <span class="demo-title">RunProcess</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-input-box">
+          <span class="demo-prompt">⌘</span>
+          <input type="text" class="demo-input" id="rp-input"
+                 data-i18n-placeholder="rp.placeholder"
+                 placeholder="Enter a command…" autocomplete="off">
+        </div>
+        <div class="demo-options-row">
+          <label class="demo-toggle">
+            <input type="checkbox" id="rp-sudo">
+            <span data-i18n="rp.sudo">Run as root</span>
+          </label>
+        </div>
+        
+        <div class="demo-hints" data-i18n="rp.hint">
+          Drag file · Tab complete · Up/Down History · Cmd+W Hide · Shift+Enter Newline
+        </div>
+        
+        <pre class="demo-output" id="rp-output"></pre>
+      </div>
+    </div>
+  </div>
+
+  <h2 data-i18n="wallpaper.title">Wallpaper</h2>
+  <p data-i18n="wallpaper.desc">Built-in gradients or import your own image.</p>
+  <div class="wallpaper-picker" id="wp-picker">
+    <button class="wp-swatch" data-bg="wp-1" style="background:linear-gradient(135deg,#667eea,#764ba2)"></button>
+    <button class="wp-swatch" data-bg="wp-2" style="background:linear-gradient(135deg,#f093fb,#f5576c)"></button>
+    <button class="wp-swatch" data-bg="wp-3" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"></button>
+    <button class="wp-swatch" data-bg="wp-4" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"></button>
+    <button class="wp-swatch" data-bg="wp-5" style="background:linear-gradient(135deg,#fa709a,#fee140)"></button>
+    <button class="wp-swatch" data-bg="wp-6" style="background:linear-gradient(135deg,#30cfd0,#330867)"></button>
+    <button class="wp-swatch" data-bg="wp-7" style="background:linear-gradient(135deg,#a8edea,#fed6e3)"></button>
+    <button class="wp-swatch" data-bg="wp-8" style="background:linear-gradient(135deg,#ff9a9e,#fecfef)"></button>
+    <label class="wp-swatch wp-import" title="Import image">
+      <input type="file" id="wp-file" accept="image/*" hidden>
+      <span data-i18n="wallpaper.import">+</span>
+    </label>
+    <button class="wp-swatch wp-none" data-bg="none" data-i18n="wallpaper.none">None</button>
+  </div>
+
+  <h2 data-i18n="rp.appearance.title">Appearance</h2>
+  <p data-i18n="rp.appearance.desc">RunProcess supports three window materials. Liquid Glass is available on macOS 26 and later.</p>
+  <div class="appearance-picker" id="rp-appearance">
+    <button class="appearance-option active" data-style="frosted" data-i18n="rp.appearance.frosted">Frosted Glass</button>
+    <button class="appearance-option" data-style="liquid" data-i18n="rp.appearance.liquid">Liquid Glass</button>
+    <button class="appearance-option" data-style="none" data-i18n="rp.appearance.none">None</button>
+  </div>
+
+  <h2 data-i18n="rp.features.title">Features</h2>
+  <ul class="feature-list">
+    <li data-i18n="rp.f1">Command execution with ANSI color output</li>
+    <li data-i18n="rp.f2">Tab completion from history, aliases, and system commands</li>
+    <li data-i18n="rp.f3">Command history ranked by frecency</li>
+    <li data-i18n="rp.f4">Sudo mode with simulated password dialog</li>
+    <li data-i18n="rp.f5">Session mode with persistent shell (macOS native)</li>
+  </ul>
+
+  <h2 data-i18n="rp.shortcuts.title">Keyboard Shortcuts</h2>
+  <table class="shortcut-table">
+    <tr><td><kbd>Enter</kbd></td><td data-i18n="rp.sc.enter">Execute command</td></tr>
+    <tr><td><kbd>Shift</kbd>+<kbd>Enter</kbd></td><td data-i18n="rp.sc.newline">New line</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td data-i18n="rp.sc.tab">Completion</td></tr>
+    <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td data-i18n="rp.sc.history">History navigation</td></tr>
+    <tr><td><kbd>Esc</kbd></td><td data-i18n="rp.sc.esc">Blur input</td></tr>
+  </table>
+
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="liquid-glass-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="1" seed="1.5" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <div class="lang-switch-footer">
+      <span class="lang-label" data-i18n="footer.lang">Language:</span>
+      <a href="#" data-lang="en">English</a>
+      <span class="lang-sep">|</span>
+      <a href="#" data-lang="zh-Hans">简体中文</a>
+      <span class="lang-sep">|</span>
+      <a href="#" data-lang="zh-Hant">繁體中文</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/i18n.js"></script>
+<script src="../assets/js/demo-common.js"></script>
+<script src="../assets/js/demo-runprocess.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.DemoCommon.initWallpaper('wp-picker', 'rp-desktop', 'wallpaper.rp');
+    window.DemoCommon.initDraggable('rp-window', '[data-drag-handle]', null, 'rp-desktop');
+    window.DemoCommon.initMacMenu('rp-menubar', 'rp-menu-backdrop');
+  });
+</script>
+</body>
+</html>

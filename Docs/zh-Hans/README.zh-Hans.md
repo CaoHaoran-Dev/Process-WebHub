@@ -1,127 +1,117 @@
-# RunProcess · Web Demo
+# Process-WebHub
 
-> macOS 风格命令启动器的网页演示版 —— 纯前端，模拟交互，开源免费。
-
----
-
-## 这是什么
-
-这是 [RunProcess](https://github.com/CaoHaoran-Dev/RunProcess) 的 **网页演示版本**。
-
-原版 RunProcess 是一个 macOS 原生应用 —— 一个 Spotlight 风格、毛玻璃界面的命令启动器，本质是给 `/bin/zsh` 套了一个漂亮的壳。
-
-这个 Web Demo 用纯前端技术（HTML + CSS + JavaScript）复现了原版的 UI 和交互逻辑。它不只是一个静态模型：它模拟了一个小型桌面环境，包括菜单栏、可拖拽的窗口、真正能用的红绿灯、Dock，以及可自定义的壁纸。
-
-你可以：
-- **在线体验**：无需下载安装，打开浏览器即可感受 macOS 风格界面
-- **了解交互**：命令输入、历史记录、Tab 补全、Sudo 模式等核心交互
-- **自定义桌面**：壁纸、Dock 大小、窗口材质、语言
-- **二次开发**：代码完全开源，可自由修改和部署
+> RunProcess (macOS) 与 ProcessSH (Windows) 的交互式网页演示 —— 纯前端，无需构建工具。
 
 ---
 
-## 功能特性
+## 简介
 
-### 核心交互
-- **命令输入**：支持多行输入（Shift+Enter 换行）
-- **模拟执行**：预设 50+ 常用命令的模拟输出
-- **Tab 补全**：从命令库和历史记录中智能补全
-- **历史记录**：↑/↓ 键浏览历史，localStorage 持久化
-- **Sudo 模式**：勾选后弹出模拟密码框，命令前添加 `sudo`
-- **拖拽文件**：拖文件到输入框自动填入路径（自动转义空格）
+**Process-WebHub** 是一个静态多页面网站，用于在浏览器中托管两个原生桌面应用的演示：
 
-### 桌面环境
-- **菜单栏**：macOS 风格菜单（RunProcess · 文件 · 编辑 · 显示 · 窗口 · 帮助），下拉菜单可交互
-- **可用的红绿灯**：红色关闭窗口、黄色最小化到 Dock、绿色最大化/还原
-- **可拖拽窗口**：按住标题栏拖动，可通过「显示」菜单重置窗口位置
-- **Dock**：点击打开/关闭 RunProcess，或打开设置与关于
-- **壁纸**：8 个内置渐变，也可从本地导入图片
-- **状态指示器**：就绪/运行中/完成/错误 状态反馈
+- **RunProcess** —— 一款 macOS 上 Spotlight 风格的命令启动器。
+- **ProcessSH** —— RunProcess 的 Windows 移植版，基于 WinUI 3 构建，具有系统托盘集成与原生 Mica/亚克力材质。
 
-### 外观
-- **两种窗口材质**：毛玻璃、纯色
-- **自动深色模式**：跟随系统偏好，「显示」菜单里也可手动切换
-- **Dock 大小**：小 / 中 / 大
-
-### 多语言支持
-- **中英双语**：一键切换，界面和命令输出同步翻译
-- **持久化**：语言偏好保存在 localStorage 中
-
-### 键盘快捷键
-
-这里只列出浏览器允许拦截的快捷键。系统级快捷键（如 ⌘Q、⌘W）无法被网页拦截，因此没有实现。
-
-| 快捷键 | 功能 |
-|--------|------|
-| `Enter` | 执行命令 |
-| `Shift+Enter` | 换行 |
-| `Tab` | 补全建议 |
-| `↑` / `↓` | 历史命令导航 |
-| `Esc` | 输入框失焦 |
+本项目的目标是在你的浏览器中直接展示这两个原生应用的 UI、交互和设计语言。你可以在不安装任何东西的情况下，拖动窗口、执行模拟命令、切换窗口材质以及自定义桌面壁纸。
 
 ---
 
-## 快速开始
+## 核心功能
 
-### 在线体验
+- **平台选择** —— 一个干净的苹果风格落地页，用于在 RunProcess 和 ProcessSH 之间进行选择。
+- **原生 UI 还原** —— 使用纯 CSS 和 Web 字体（Segoe Fluent Icons）像素级复刻 macOS 红绿灯、菜单栏、Windows 任务栏、系统托盘以及亚克力悬浮面板。
+- **窗口拖拽** —— 基于原生 Pointer Events 的全功能窗口拖拽（完美支持鼠标、触控板和触摸屏）。
+- **窗口动态扩展** —— 窗口会根据命令输出内容平滑增加高度，与原生应用的表现完全一致。
+- **自定义壁纸** —— 可选择 8 种内置渐变，或导入你自己的图片（存储在本地 `localStorage` 中）。
+- **窗口材质** —— 模拟 RunProcess 的毛玻璃、液态玻璃，以及 ProcessSH 的 Mica、亚克力、纯色。
+- **完整本地化** —— 通过运行时加载 JSON，完整支持英语、简体中文（zh-Hans）和繁体中文（zh-Hant）。
+- **模拟执行** —— 预设的一组命令会返回带有 ANSI 格式的模拟输出。不会在你的机器上真正执行任何内容。
 
-访问 GitHub Pages：
-[https://CaoHaoran-Dev.github.io/RunProcess-WebDemo/](https://CaoHaoran-Dev.github.io/RunProcess-WebDemo/index.html)
+---
 
-### 本地运行
+## 项目结构
+
+```text
+Process-WebHub/
+├── index.html                 # 主页（平台选择）
+├── runprocess/
+│   └── index.html             # RunProcess (macOS) 演示与文档
+├── processsh/
+│   └── index.html             # ProcessSH (Windows) 演示与文档
+└── assets/
+    ├── css/
+    │   ├── main.css           # 全局站点样式、变量、排版
+    │   ├── demo.css           # 原生 UI 组件、窗口拖拽、布局
+    │   └── liquid-glass.css   # RunProcess 专属液态玻璃效果
+    ├── js/
+    │   ├── i18n.js            # 本地化引擎（JSON 加载器）
+    │   ├── demo-common.js     # 共享逻辑（壁纸、拖拽、菜单）
+    │   ├── demo-runprocess.js # RunProcess 交互逻辑
+    │   └── demo-processsh.js  # ProcessSH 交互逻辑
+    └── lang/
+        ├── en.json            # 英文文案
+        ├── zh-Hans.json       # 简体中文文案
+        └── zh-Hant.json       # 繁体中文文案
+```
+
+---
+
+## 本地运行
+
+因为站点通过 `fetch` 加载本地化 JSON 字符串，受 CORS 限制，你不能直接双击打开 `index.html` 文件。
 
 1. **克隆仓库**
-```bash
-git clone https://github.com/CaoHaoran-Dev/RunProcess-WebDemo.git
-cd RunProcess-WebDemo
-```
+   ```bash
+   git clone https://github.com/CaoHaoran-Dev/Process-WebHub.git
+   cd Process-WebHub
+   ```
 
-2. **在浏览器中打开**
-```bash
-# 方式一：双击 index.html 用浏览器打开
-# 方式二：使用 VS Code Live Server
-code .
-# 右键 index.html → Open with Live Server
-```
+2. **启动本地服务器**
+   - 使用 Python（推荐）：
+     ```bash
+     python3 -m http.server 8000
+     ```
+   - 或者使用 Node.js（如果你安装了 `npx`）：
+     ```bash
+     npx serve .
+     ```
 
-不需要任何构建工具或依赖。
-
-### 部署到 GitHub Pages
-
-1. Fork 本仓库
-2. 进入 Settings → Pages → Branch 选择 `main`
-3. 访问 `https://你的用户名.github.io/RunProcess-WebDemo/`
+3. **在浏览器中打开**
+   访问 `http://localhost:8000`。
 
 ---
 
-## 技术栈
+## 部署
 
-| 技术 | 用途 |
-|------|------|
-| **HTML5** | 页面结构 |
-| **CSS3** | 毛玻璃效果、深色模式、响应式布局 |
-| **Vanilla JavaScript** | 所有交互逻辑（无框架依赖） |
-| **localStorage** | 设置、历史记录、壁纸持久化 |
+本项目专为托管在 **GitHub Pages** 或任何静态托管服务而设计。
+
+1. 将仓库推送到 GitHub。
+2. 进入 **Settings → Pages**。
+3. 在 **Build and deployment** 下，将 source 设置为 **Deploy from a branch**。
+4. 选择 `main` 分支和 `/ (root)` 文件夹。
+5. 保存。你的站点将发布在 `https://<你的用户名>.github.io/Process-WebHub/`。
+
+> **注意：** 请确保根目录下存在 `.nojekyll` 文件，以防止 GitHub Pages 使用 Jekyll 处理站点（这可能会干扰 `assets/` 文件夹）。
 
 ---
 
 ## 已知限制
 
-- **命令是模拟的。** 不会在你的机器上执行任何东西，输出是预设的假数据。
-- **Sudo 是模拟的。** 密码框接受任意输入，不会真的提权。
-- **红绿灯是外观级的。** 红色只是隐藏窗口，Dock 图标仍在。网页无法真正退出或关闭自己。
-- **拖拽文件只能拿到文件名。** 出于安全考虑，浏览器不暴露拖入文件的完整路径，`files[0].path` 通常是空的。
-- **壁纸有大小限制。** 导入的图片以 Data URL 存在 localStorage 里，配额通常约 5 MB。
+- **仅为模拟命令：** 不会执行真实的 shell 命令。所有输出均为硬编码的模拟数据。
+- **Sudo / 管理员模式为模拟：** 密码输入框和 UAC 提示仅用于视觉展示。
+- **壁纸大小限制：** 导入的图片以 Data URL 形式存储在 `localStorage` 中。浏览器通常将 `localStorage` 限制在 5 MB 左右。
+- **液态玻璃折射效果：** RunProcess 中真正的折射效果需要 SVG 置换贴图，这仅在基于 Chromium 的浏览器中获得完整支持。Safari 和 Firefox 会自动降级为毛玻璃效果。
 
 ---
 
-## 文档
+## 技术栈
 
-- [English README](../../README.md)
-- [License](LICENSE.zh-Hans.md)
+- **HTML5 与 CSS3**（Flexbox、Grid、CSS 变量、`backdrop-filter`）
+- **Vanilla JavaScript**（无框架、无打包工具）
+- **Pointer Events** 用于统一的鼠标/触摸拖拽
+- **Web 字体**（`Segoe Fluent Icons`、`SF Pro`、`Cascadia Mono`）
 
 ---
 
 ## 许可证
 
-MIT © CaoHaoran-Dev
+MIT © 2026 CaoHaoran-Dev
